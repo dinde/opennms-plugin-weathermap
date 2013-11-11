@@ -1,0 +1,133 @@
+--- src/weathermap4rrd	2008-11-24 10:18:52.000000000 +0100
++++ patched_file/weathermap4rrd	2013-11-05 03:36:01.000000000 +0100
+@@ -1,11 +1,18 @@
+ #!/usr/bin/perl
+-# Weathermap4rrd 
+-# Alexandre Fontelle, <afontelle AT free.fr>
+-# http://weathermap4rrd.tropicalex.net
++## Weathermap4rrd
++# A patched version of weathermap4rrd that allow features as TARGETIN/TARGETOUT
++# This was initialy intended to be included in Opennms and remains backward compatible.
++##
++# Original authors: Alexandre Fontelle, <afontelle AT free.fr> http://weathermap4rrd.tropicalex.net
+ # based on Network Wearthermap - version 1.1.1 from Panagiotis Christias (http://netmon.grnet.gr/weathermap/)
+ # modified for RRDTool use and other stuff
++# Author: David "Dinde" OH <david@ows.fr> - http://www.owns.fr
++# Date: 01/11/2013 -> Patch-1 by: David Dinde <david@ows.fr> to feature TARGETIN/TARGETOUT options not ported on perl's script.
++# Version: 1.2RC3-patch-1
++# Licence:
++##
+ 
+-$VERSION = "1.2RC3";
++$VERSION = "1.2RC3-patch-1";
+ 
+ use Getopt::Long;
+ use GD;
+@@ -95,29 +102,55 @@
+ 
+ print "Reading rrd files...\n\n" if($DEBUG);
+ foreach $link (keys %target){
+-	$data = $target{$link};
+-	print "FILE: $data\n" if($DEBUG);
++	$datain = $targetin{$link};
++	print "FILE: $datain\n" if($DEBUG);
+ 	if ( ! $DATE ) {
+-		$DATE= RRDs::last "$data";
++		$DATE= RRDs::last "$datain";
+ 		$version=&rrdtool_getversion();
+ 		print "RRDTool binary version detected : $version\n" if ($DEBUG);
+-		if ($version=="1.2" || $version=="1.3") {
++		if ($version=="1.2" || $version=="1.3" || $version=="1.4") {
+ 			$DATE= $DATE-300;
+ 		}
+ 		print "No date specified, last value will be read : ".scalar localtime($DATE)."\n" if ($DEBUG);
+ 	}
+-	my ($start,$step,$names,$data) = RRDs::fetch "$data","AVERAGE","--start","$DATE","--end","$DATE";
++	my ($start,$step,$names,$datain) = RRDs::fetch "$datain","AVERAGE","--start","$DATE","--end","$DATE";
+ 	my $ERR=RRDs::error;
+-	die "W4RRD ERROR while reading $target{$link}: $ERR\n" if $ERR;
++	die "W4RRD ERROR while reading $targetin{$link}: $ERR\n" if $ERR;
+ 	print "Start:       ", scalar localtime($start), " ($start)\n"  if($DEBUG);
+ 	print "Step size:   $step seconds\n"  if($DEBUG);
+ 	print "DS names:    ", join (", ", @$names)."\n"  if($DEBUG);
+-	print "Data points: ", $#$data + 1, "\n"  if($DEBUG);
+-	foreach my $line (@$data) {
++	print "Data points: ", $#$datain + 1, "\n"  if($DEBUG);
++
++        foreach my $line (@$datain) {
++                if(@$line[0] != null) {
++                        $input{$link}=@$line[$inpos{$link}-1]*$coef{$link};
++                        print "LINK: $link, Input: $input{$link}\n" if($DEBUG);
++                }
++        }
++
++        $dataout = $targetout{$link};
++        print "FILE: $dataout\n" if($DEBUG);
++        if ( ! $DATE ) {
++                $DATE= RRDs::last "$dataout";
++                $version=&rrdtool_getversion();
++                print "RRDTool binary version detected : $version\n" if ($DEBUG);
++                if ($version=="1.2" || $version=="1.3" || $version=="1.4") {
++                        $DATE= $DATE-300;
++                }
++                print "No date specified, last value will be read : ".scalar localtime($DATE)."\n" if ($DEBUG);
++        }
++
++        my ($start,$step,$names,$dataout) = RRDs::fetch "$dataout","AVERAGE","--start","$DATE","--end","$DATE";
++        my $ERR=RRDs::error;
++        die "W4RRD ERROR while reading $targetout{$link}: $ERR\n" if $ERR;
++        print "Start:       ", scalar localtime($start), " ($start)\n"  if($DEBUG);
++        print "Step size:   $step seconds\n"  if($DEBUG);
++        print "DS names:    ", join (", ", @$names)."\n"  if($DEBUG);
++        print "Data points: ", $#$dataout + 1, "\n"  if($DEBUG);
++
++	foreach my $line (@$dataout) {
+ 		if(@$line[0] != null) {
+-			$input{$link}=@$line[$inpos{$link}-1]*$coef{$link};
+ 			$output{$link}=@$line[$outpos{$link}-1]*$coef{$link};
+-			print "LINK: $link, Input: $input{$link}\n" if($DEBUG);
+ 			print "LINK: $link, Output: $output{$link}\n" if($DEBUG);
+ 		}
+ 	}
+@@ -877,13 +910,24 @@
+ 		print "found GROUP: $link GROUP: $group_name{$link}\n" if($DEBUG);
+ 	}
+ 
++        if(/^\s*TARGETIN\s+(\S+)/i){
++                $targetin{$link}=$1;
++		$target{$link}=$1;
++                print "found LINK: $link TARGETIN: $targetin{$link}\n" if($DEBUG);
++        }
++
++        if(/^\s*TARGETOUT\s+(\S+)/i){
++                $targetout{$link}=$1;
++                print "found LINK: $link TARGETOUT: $targetout{$link}\n" if($DEBUG);
++        }
+ 
+ 	if(/^\s*TARGET\s+(\S+)/i){
+ 		$target{$link}=$1;
++		$targetin{$link}=$target{$link};
++		$targetout{$link}=$target{$link};
+ 		print "found LINK: $link TARGET: $target{$link}\n" if($DEBUG);
+ 	}
+ 
+-
+ 	# If only one value is set for bandwidth. IN=OUT bandwidth.
+ 	if(/^\s*BANDWIDTH\s+(\d+)/i){
+ 		    $bandwidth{$link}=$1;
+@@ -1363,13 +1407,13 @@
+ 
+ sub version {
+         print <<EOM;
+-Wearthermap4RRD v$VERSION - http://weathermap4rrd.tropicalex.net
++Wearthermap4RRD v$VERSION - Patched by Dinde: https://github.org/dinde/ originaly http://weathermap4rrd.tropicalex.net
+ EOM
+ }
+ 
+ sub usage {
+         print <<EOM;
+-Wearthermap4RRD v$VERSION - http://weathermap4rrd.tropicalex.net
++Wearthermap4RRD v$VERSION - Patched by Dinde: https://github.org/dinde/ originaly http://weathermap4rrd.tropicalex.net
+ based on Network Weathermap v$VERSION 
+ Usage: $0 [OPTION]...
+ 

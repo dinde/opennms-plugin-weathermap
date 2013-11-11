@@ -1,0 +1,45 @@
+####################################
+# Opennms's Weathermap Integration #
+####################################
+
+This file is just here to enable weathermap menu link.
+If you want to desactivate it, please delete this file or:
+mv weathermap.enable weathermap.disable
+
+- Version: 1.0 - David Dinde <david@ows.fr> 01/11/2013
+
+=== Features ===
+* Based on weathermap4rrd, the perl script has been patched in order to accept Opennms RRDs.
+* Two new directives are TARGETIN/TARGETOUT. Backward compatibility is working as well (TARGET).
+* Integration inside Opennms Maps section.
+* Support multiples WeatherMaps to be displayed with self refresh. (Always use opennms/weathermap/img folder to output your png files)
+
+=== Patched files ===
+* weathermap4rrd: (perl) TARGETIN/TARGETOUT
+* opennms/WEB-INF/dispatcher-servlet.xml: Added Weathermap definition for menu
+
+=== Added folders/files ===
+* jetty-webapps/opennms/weathermap/index.jsp: page displaying the maps (selectbox if many png on img folder). Self refresh 60s
+* jetty-webapps/opennms/weathermap/img/maps/default.png: same as example.png, will be replaced when cron activated
+* jetty-webapps/opennms/weathermap/img/maps/example.png: an explicative map of the configuration file
+* jetty-webapps/opennms/weathermap/img/backgrounds/black.png: a default black background
+* jetty-webapps/opennms/weathermap/img/backgrounds/default.png: black background + legends of provided icons
+* jetty-webapps/opennms/weathermap/img/backgrounds/psd/default.psd: source of black background + legends of provided icons
+* jetty-webapps/opennms/weathermap/img/icons/: pack of icons + the one which came with weathermap4rrd
+* /etc/opennms/weathermap.enable: to disable/enable the weathermap link
+* /etc/cron.d/weathermap4opennms: for i in $(ls /etc/opennms/weathermap/*.conf); do /usr/bin/weathermap4rrd -c $i ; done
+
+=== Dependencies ===
+* perl
+* libdbi0 
+* libgd-gd2-perl 
+* libgd2-xpm 
+* librrd4 
+* librrds-perl
+* crontab
+
+=== Thanks ===
+* FabriceB: For his time/help.
+* Nicolas AUBIN: Background with legends
+* defr: For his help on the jsp
+* Alexandre Fontelle for the initial perl version of Weathermap4RRD
