@@ -29,7 +29,7 @@ function get_deps(){
 	        apt-get install -y librrds-perl libgd-gd2-perl librrd4 unzip
 	elif [ "$DISTRO" = 'rpm' ] ; then
 	        echo "NOTICE: Getting dependencies ..."
-	        yum install -y zip patch perl-GD rrdtool-perl
+	        yum install -y unzip patch perl-GD rrdtool-perl
 	fi
 }
 function get_pkg(){
