@@ -43,7 +43,8 @@ function get_pkg(){
 			exit 1
 		else 
 			echo "NOTICE: opennms-plugin-weathermap.zip downloaded to $(pwd) !"
-			unzip opennms-plugin-weathermap.zip
+			unzip opennms-plugin-weathermap.zip 
+			mv opennms-plugin-weathermap-master opennms-plugin-weathermap
 			if [ "$?" != "0" ] ; then
 				echo "Can't extract the zip archive. unzip is missing, exiting ..."
 				exit 1
