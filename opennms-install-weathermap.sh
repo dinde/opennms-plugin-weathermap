@@ -23,6 +23,15 @@ function os_detect(){
 	fi
 }
 
+function get_deps(){
+	if [ "$DISTRO" == 'deb' ] ; then
+	        echo "NOTICE: Getting dependencies ..."
+	        apt-get install -y librrds-perl libgd-gd2-perl librrd4
+	elif [ "$DISTRO" == 'rpm' ] ; then
+	        echo "NOTICE: Getting dependencies ..."
+	        yum install -y zip patch perl-GD rrdtool-perl
+	fi
+}
 function get_pkg(){
 	echo "NOTICE: Downloading the sources ..."
 	git clone https://github.com/dinde/opennms-plugin-weathermap.git opennms-plugin-weathermap
@@ -44,8 +53,6 @@ function get_pkg(){
 }
 
 function deploy_deb(){
-	echo "NOTICE: Getting dependencies ..."
-	apt-get install -y librrds-perl libgd-gd2-perl librrd4 
 	echo "NOTICE: Deploying files for deb based distro ..."
 	if [ -d "/usr/share/opennms/jetty-webapps/opennms/" ] ; then
 		cp -ar opennms-plugin-weathermap/webapps/weathermap/ /usr/share/opennms/jetty-webapps/opennms/
@@ -95,8 +102,6 @@ function deploy_deb(){
 }
 
 function deploy_rpm(){
-	echo "NOTICE: Getting dependencies ..."
-	yum install -y zip patch perl-GD rrdtool-perl
 	echo "NOTICE: Deploying files for rpm based distro ..."
     if [ -d "/opt/opennms/jetty-webapps/opennms/" ] ; then
         cp -ar opennms-plugin-weathermap/webapps/weathermap/ /opt/opennms/jetty-webapps/opennms/
@@ -148,6 +153,8 @@ function deploy_rpm(){
 
 ## Start
 get_pkg
+
+get_deps
 
 os_detect
 
