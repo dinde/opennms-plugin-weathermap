@@ -26,7 +26,7 @@ function os_detect(){
 function get_deps(){
 	if [ "$DISTRO" = 'deb' ] ; then
 	        echo "NOTICE: Getting dependencies ..."
-	        apt-get install -y librrds-perl libgd-gd2-perl librrd4
+	        apt-get install -y librrds-perl libgd-gd2-perl librrd4 unzip
 	elif [ "$DISTRO" = 'rpm' ] ; then
 	        echo "NOTICE: Getting dependencies ..."
 	        yum install -y zip patch perl-GD rrdtool-perl
