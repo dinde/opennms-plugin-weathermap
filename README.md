@@ -14,8 +14,8 @@
 
 === Install ===
 == Automated ==
-  For .deb or .rpm based distributions:
-  wget -O - https://raw.github.com/dinde/opennms-plugin-weathermap/master/opennms-install-weathermap.sh | /bin/bash
+* For .deb or .rpm based distributions:
+* wget -O - https://raw.github.com/dinde/opennms-plugin-weathermap/master/opennms-install-weathermap.sh | /bin/bash
 
 == Manual ==
 * Download or git clone
@@ -87,5 +87,5 @@ OR
 * opennms
 
 === Thanks ===
-  FabriceB, Nicolas AUBIN, defr, Alexandre Fontelle (initial perl version of Weathermap4RRD)
+* FabriceB, Nicolas AUBIN, defr, Alexandre Fontelle (initial perl version of Weathermap4RRD)
 
