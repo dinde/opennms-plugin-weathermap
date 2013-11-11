@@ -14,8 +14,8 @@
 
 === Install ===
 == Automated ==
-For .deb or .rpm based distributions:
-wget -O - https://raw.github.com/dinde/opennms-plugin-weathermap/master/opennms-install-weathermap.sh | /bin/bash
+  For .deb or .rpm based distributions:
+  wget -O - https://raw.github.com/dinde/opennms-plugin-weathermap/master/opennms-install-weathermap.sh | /bin/bash
 
 == Manual ==
 * Download or git clone
@@ -53,7 +53,7 @@ OR
 
 * Add a crontab entry:
 - Debian: echo -e "#!/bin/bash \n */5 * * * for i in \$(ls /etc/opennms/weathermap/*.conf) \; do /usr/share/opennms/bin/weathermap4rrd -c \$i \; done" > /etc/cron.d/opennms_weathermap
-- Centos: echo -e "#!/bin/bash \n */5 * * * for i in \$(ls /opt/opennms/etc/weathermap/*.conf) \; do /usr/share/opennms/bin/weathermap4rrd -c \$i ; done" > /etc/cron.d/opennms_weathermap
+- Centos: echo -e "#!/bin/bash \n */5 * * * for i in \$(ls /opt/opennms/etc/weathermap/*.conf) \; do /opt/opennms/bin/weathermap4rrd -c \$i ; done" > /etc/cron.d/opennms_weathermap
 * chmod +x /etc/cron.d/opennms_weathermap
 
 === Setup ===
@@ -87,5 +87,5 @@ OR
 * opennms
 
 === Thanks ===
-FabriceB, Nicolas AUBIN, defr, Alexandre Fontelle (initial perl version of Weathermap4RRD)
+  FabriceB, Nicolas AUBIN, defr, Alexandre Fontelle (initial perl version of Weathermap4RRD)
 
