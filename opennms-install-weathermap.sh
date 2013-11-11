@@ -152,11 +152,11 @@ function deploy_rpm(){
 }
 
 ## Start
-get_pkg
+os_detect
 
 get_deps
 
-os_detect
+get_pkg
 
 if [ "$DISTRO" = 'deb' ] ; then
 	deploy_deb
