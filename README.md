@@ -51,8 +51,8 @@ OR
 * cd /opt/opennms/jetty-webapps/opennms/WEB-INF/ && dispatcher-servlet.xml dispatcher-servlet.xml.ori
 
 * Add a crontab entry:
-- Debian: echo -e "#\!/bin/bash\n#*/5 * * * if [ -f /etc/opennms/weathermap.enable ] ; then for i in \$(ls /etc/opennms/weathermap/*.conf) ; do /usr/share/opennms/bin/weathermap4rrd -c \$i ; done fi" > /etc/cron.d/opennms_weathermap
-- Centos: echo -e "#\!/bin/bash\n#*/5 * * * if [ -f /opt/opennms/etc/weathermap.enable ] ; then for i in \$(ls /opt/opennms/etc/weathermap/*.conf) ; do /opt/opennms/bin/weathermap4rrd -c \$i ; done fi" > /etc/cron.d/opennms_weathermap
+- Debian: echo -e "#\!/bin/bash\n#*/5 * * * if [ -f /etc/opennms/weathermap.enable ] ; then for i in \$(ls /etc/opennms/weathermap/**.conf) ; do /usr/share/opennms/bin/weathermap4rrd -c \$i ; done fi" > /etc/cron.d/opennms_weathermap
+- Centos: echo -e "#\!/bin/bash\n#*/5 * * * if [ -f /opt/opennms/etc/weathermap.enable ] ; then for i in \$(ls /opt/opennms/etc/weathermap/**.conf) ; do /opt/opennms/bin/weathermap4rrd -c \$i ; done fi" > /etc/cron.d/opennms_weathermap
 * chmod +x /etc/cron.d/opennms_weathermap
 
 ## Setup
