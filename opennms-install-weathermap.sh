@@ -91,7 +91,7 @@ function deploy_deb(){
 
 	if [ -d "/etc/cron.d/" ] ; then
 		if [ ! -f "/etc/cron.d/opennms_weathermap" ] ; then
-			echo -e "#!/bin/bash \n #*/5 * * * for i in \$(ls /etc/opennms/weathermap/*.conf) \; do /usr/share/opennms/bin/weathermap4rrd -c \$i \; done" > /etc/cron.d/opennms_weathermap
+			echo -e "#\!/bin/bash\n#*/5 * * * if [ -f /etc/opennms/weathermap.enable ] ; then for i in \$(ls /etc/opennms/weathermap/*.conf) ; do /usr/share/opennms/bin/weathermap4rrd -c \$i ; done fi" > /etc/cron.d/opennms_weathermap
 			chmod +x /etc/cron.d/opennms_weathermap
 			echo "SUCCESS: crontab deployed to /etc/cron.d/opennms_weathermap !"
 		else
@@ -140,7 +140,7 @@ function deploy_rpm(){
 
     if [ -d "/etc/cron.d/" ] ; then
         if [ ! -f "/etc/cron.d/opennms_weathermap" ] ; then
-            echo -e "#!/bin/bash \n #*/5 * * * for i in \$(ls /etc/opennms/weathermap/*.conf) \; do /opt/opennms/bin/weathermap4rrd -c \$i \; done" > /etc/cron.d/opennms_weathermap
+            echo -e "#\!/bin/bash\n#*/5 * * * if [ -f /opt/opennms/etc/weathermap.enable ] ; then for i in \$(ls /opt/opennms/etc/weathermap/*.conf) ; do /opt/opennms/bin/weathermap4rrd -c \$i ; done fi" > /etc/cron.d/opennms_weathermap
             chmod +x /etc/cron.d/opennms_weathermap
             echo "SUCCESS: crontab deployed to /etc/cron.d/opennms_weathermap !"
         else
