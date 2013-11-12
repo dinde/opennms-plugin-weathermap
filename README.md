@@ -8,7 +8,7 @@
 * Backward compatible with previous versions of weathermap4rrd (perl script) TARGET directive.
 * Integration inside Opennms Maps section.
 * Support multiples WeatherMaps to be displayed with self refresh. (Always use jetty-webapps/opennms/weathermap/img folder to output your png files)
-* You can enable/disable the UI integration by changing weathermap.enable file to weathermap.disable
+* You can enable/disable the UI integration and crontab by changing weathermap.enable file to weathermap.disable
 
 ## Install
 
@@ -51,8 +51,8 @@ OR
 * cd /opt/opennms/jetty-webapps/opennms/WEB-INF/ && dispatcher-servlet.xml dispatcher-servlet.xml.ori
 
 * Add a crontab entry:
-- Debian: echo -e "#!/bin/bash \n */5 * * * for i in \$(ls /etc/opennms/weathermap/*.conf) \; do /usr/share/opennms/bin/weathermap4rrd -c \$i \; done" > /etc/cron.d/opennms_weathermap
-- Centos: echo -e "#!/bin/bash \n */5 * * * for i in \$(ls /opt/opennms/etc/weathermap/*.conf) \; do /opt/opennms/bin/weathermap4rrd -c \$i ; done" > /etc/cron.d/opennms_weathermap
+- Debian: echo -e "#\!/bin/bash\n#*/5 * * * if [ -f /etc/opennms/weathermap.enable ] ; then for i in \$(ls /etc/opennms/weathermap/*.conf) ; do /usr/share/opennms/bin/weathermap4rrd -c \$i ; done fi" > /etc/cron.d/opennms_weathermap
+- Centos: echo -e "#\!/bin/bash\n#*/5 * * * if [ -f /opt/opennms/etc/weathermap.enable ] ; then for i in \$(ls /opt/opennms/etc/weathermap/*.conf) ; do /opt/opennms/bin/weathermap4rrd -c \$i ; done fi" > /etc/cron.d/opennms_weathermap
 * chmod +x /etc/cron.d/opennms_weathermap
 
 ## Setup
