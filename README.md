@@ -1,10 +1,8 @@
-####################################
-# Opennms's Weathermap Integration #
-####################################
+# Opennms's Weathermap Integration
 
 - Version: 1.0 - David "Dinde" OH <david@ows.fr> 01/11/2013
 
-=== Features ===
+## Features
 * Based on weathermap4rrd, the perl script has been patched in order to accept Opennms RRDs.
 * Two new directives are TARGETIN/TARGETOUT. 
 * Backward compatible with previous versions of weathermap4rrd (perl script) TARGET directive.
@@ -12,12 +10,13 @@
 * Support multiples WeatherMaps to be displayed with self refresh. (Always use jetty-webapps/opennms/weathermap/img folder to output your png files)
 * You can enable/disable the UI integration by changing weathermap.enable file to weathermap.disable
 
-=== Install ===
-== Automated ==
+## Install
+
+### Automated
 * For .deb or .rpm based distributions:
 * wget -O - https://raw.github.com/dinde/opennms-plugin-weathermap/master/opennms-install-weathermap.sh | /bin/bash
 
-== Manual ==
+### Manual
 * Download or git clone
 * https://github.com/dinde/opennms-plugin-weathermap/
 
@@ -56,15 +55,15 @@ OR
 - Centos: echo -e "#!/bin/bash \n */5 * * * for i in \$(ls /opt/opennms/etc/weathermap/*.conf) \; do /opt/opennms/bin/weathermap4rrd -c \$i ; done" > /etc/cron.d/opennms_weathermap
 * chmod +x /etc/cron.d/opennms_weathermap
 
-=== Setup ===
+## Setup
 * Configure default.conf (keep always this one) and add more file.conf as wanted/needed
 * Maps will show up in the Opennms UI as long the output folder is at: jetty-webapps/opennms/weathermap/img/maps/
 
-=== Patched files ===
+## Patched files
 * weathermap4rrd: (perl) TARGETIN/TARGETOUT
 * opennms/WEB-INF/dispatcher-servlet.xml: Added Weathermap definition for menu
 
-=== Added folders/files ===
+## Added folders/files
 * jetty-webapps/opennms/weathermap/index.jsp: page displaying the maps (selectbox if many png on img folder). Self refresh 60s
 * jetty-webapps/opennms/weathermap/img/maps/default.png: same as example.png, will be replaced when cron activated
 * jetty-webapps/opennms/weathermap/img/maps/example.png: an explicative map of the configuration file
@@ -76,7 +75,7 @@ OR
 * /etc/opennms/weathermap/: folder with configuration files for weathermap4rrd 
 * /etc/opennms/weathermap/default.conf: default template configuration 
 
-=== Dependencies ===
+## Dependencies
 * perl
 * libdbi0 
 * libgd-gd2-perl 
@@ -86,6 +85,6 @@ OR
 * crontab
 * opennms
 
-=== Thanks ===
+## Thanks
 * FabriceB, Nicolas AUBIN, defr, Alexandre Fontelle (initial perl version of Weathermap4RRD)
 
