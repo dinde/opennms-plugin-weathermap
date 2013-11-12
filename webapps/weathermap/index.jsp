@@ -39,7 +39,6 @@
         File f = new File(file);
         String [] fileNames = f.list();
         File [] fileObjects= f.listFiles(new FilenameFilter() {
-		@Override
 		public boolean accept(File dir, String name) {
 			return name.endsWith(".png");
 		}
