@@ -8,7 +8,7 @@
 * Backward compatible with previous versions of weathermap4rrd (perl script) TARGET directive.
 * Integration inside Opennms Maps section.
 * Support multiples WeatherMaps to be displayed with self refresh. (Always use jetty-webapps/opennms/weathermap/img folder to output your png files)
-* You can enable/disable the UI integration and crontab by changing weathermap.enable file to weathermap.disable
+* You can enable/disable the cron and UI integration by changing weathermap.enable file to weathermap.disable
 
 ## Install
 
