@@ -141,11 +141,6 @@ function deploy_rpm(){
     if [ -d "/etc/cron.d/" ] ; then
         if [ ! -f "/etc/cron.d/opennms_weathermap" ] ; then
             echo -e "#\!/bin/bash\n#*/5 * * * if [ -f /opt/opennms/etc/weathermap.enable ] ; then for i in \$(ls /opt/opennms/etc/weathermap/*.conf) ; do /opt/opennms/bin/weathermap4rrd -c \$i ; done fi" > /etc/cron.d/opennms_weathermap
-<<<<<<< HEAD
-	    chmod +x /etc/cron.d/opennms_weathermap
-=======
-            chmod +x /etc/cron.d/opennms_weathermap
->>>>>>> v1.x-stable
             echo "SUCCESS: crontab deployed to /etc/cron.d/opennms_weathermap !"
         else
             echo "WARNING: files already exists."
