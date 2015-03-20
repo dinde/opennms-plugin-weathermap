@@ -1,6 +1,6 @@
 # Opennms's Weathermap Integration
 
-- Version: 1.0 - David "Dinde" OH <david@ows.fr> 01/11/2013
+- Version: 1.0 - David "Dinde" <kayser@euroserv.com> 01/11/2013
 
 ## Features
 * Based on weathermap4rrd, the perl script has been patched in order to accept Opennms RRDs.
