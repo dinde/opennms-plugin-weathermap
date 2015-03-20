@@ -2,7 +2,7 @@
 
 ## opennms-install-weathermap.sh
 ##
-# Author: David "Dinde" OH <david@ows.fr> - http://www.owns.fr
+# Author: David "Dinde" <kayser@euroserv.com>
 # Version: 1.0
 # Licence:
 ##
