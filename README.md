@@ -1,6 +1,10 @@
 # Opennms's Weathermap Integration
 
-- Version: 1.0 - David "Dinde" <kayser@euroserv.com> 01/11/2013
+- Version: 1.1 - David "Dinde" <kayser@euroserv.com> 25/03/2015
+
+## Branches
+- v1.0 is for Opennms version 14.x and previous
+- v1.1 is for Opennms version 15.x
 
 ## Features
 * Based on weathermap4rrd, the perl script has been patched in order to accept Opennms RRDs.
@@ -87,5 +91,6 @@ OR
 * opennms
 
 ## Thanks
+* jeffg for the v1.1 patch
 * FabriceB, Nicolas AUBIN, defr, Alexandre Fontelle (initial perl version of Weathermap4RRD)
 
