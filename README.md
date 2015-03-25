@@ -5,6 +5,7 @@
 ## Branches
 - v1.0 is for Opennms version 14.x and previous
 - v1.1 is for Opennms version 15.x
+- master is set to latest -> v1.1
 
 ## Features
 * Based on weathermap4rrd, the perl script has been patched in order to accept Opennms RRDs.
