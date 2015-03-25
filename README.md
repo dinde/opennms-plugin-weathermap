@@ -2,6 +2,10 @@
 
 - Version: 1.0 - David "Dinde" <kayser@euroserv.com> 01/11/2013
 
+## Branches
+- v1.0 is for Opennms version 14.x and previous
+- v1.1 is for Opennms version 15.x
+
 ## Features
 * Based on weathermap4rrd, the perl script has been patched in order to accept Opennms RRDs.
 * Two new directives are TARGETIN/TARGETOUT. 
