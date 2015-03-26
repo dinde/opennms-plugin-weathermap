@@ -34,10 +34,10 @@ function get_deps(){
 }
 function get_pkg(){
 	echo "NOTICE: Downloading the sources ..."
-	git clone https://github.com/dinde/opennms-plugin-weathermap.git opennms-plugin-weathermap
+	git clone https://github.com/dinde/opennms-plugin-weathermap.git --branch v1.0-stable --single-branch opennms-plugin-weathermap
 	if [ "$?" != "0" ] ; then
 		echo "WARNING: git is not installed ! Trying to wget it."
-		wget https://github.com/dinde/opennms-plugin-weathermap/archive/master.zip -O opennms-plugin-weathermap.zip
+		wget https://github.com/dinde/opennms-plugin-weathermap/archive/v1.0-stable/master.zip -O opennms-plugin-weathermap.zip
 		if [ "$?" != "0" ] ; then
 			echo "FATAL: wget failed as well ! Not more method left, exiting ..."
 			exit 1
